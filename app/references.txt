@@ -1,0 +1,3 @@
+https://www.dafont.com/pokemon.font
+
+https://developer.android.com/develop/ui/views/text-and-emoji/fonts-in-xml
