@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FinalProject</string>
     <string name="pokemart">PokeMart</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
 </resources>
