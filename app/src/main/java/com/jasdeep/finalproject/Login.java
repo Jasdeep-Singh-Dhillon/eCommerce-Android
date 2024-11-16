@@ -1,5 +1,6 @@
 package com.jasdeep.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -66,11 +67,11 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("USER_MAIN_ACTIVITY", "signInWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
-                            Toast.makeText(
-                                            getApplicationContext(),
-                                            "Login Successful",
-                                            Toast.LENGTH_SHORT)
-                                    .show();
+
+                            if(user != null) {
+                                Intent intent = new Intent(getApplicationContext(), Home.class);
+                                startActivity(intent);
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("USER_MAIN_ACTIVITY", "signInWithEmail:failure", task.getException());

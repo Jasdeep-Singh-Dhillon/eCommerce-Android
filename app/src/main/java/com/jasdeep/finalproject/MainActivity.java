@@ -49,20 +49,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SignUp.class);
             startActivity(intent);
         });
-
-//        loginButton.setOnLongClickListener(v -> {
-//            String email = emailEdtxt.getEditableText().toString();
-//            String password = passwordEdtxt.getEditableText().toString();
-//            if(isValidEmail(email) && isValidPassword(password))
-//            createUser(email, password);
-//            return true;
-//        });
-//
-//        loginButton.setOnClickListener(view -> {
-//            String email = emailEdtxt.getEditableText().toString();
-//            String password = passwordEdtxt.getEditableText().toString();
-//            loginUser(email, password);
-//        });
     }
 
     @Override
@@ -77,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
             ).show();
 
 //            TODO: Implement Login, SignUp and Signout
-//            Intent intent = new Intent(getApplicationContext(), Home.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), Home.class);
+            startActivity(intent);
         }
     }
 

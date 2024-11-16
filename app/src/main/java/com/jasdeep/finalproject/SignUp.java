@@ -1,5 +1,6 @@
 package com.jasdeep.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -71,9 +72,13 @@ public class SignUp extends AppCompatActivity {
                             FirebaseUser user = auth.getCurrentUser();
                             Toast.makeText(
                                             getApplicationContext(),
-                                            "Created User",
+                                            "Sign Up successful",
                                             Toast.LENGTH_SHORT)
                                     .show();
+                            if(user != null) {
+                                Intent intent = new Intent(getApplicationContext(), Login.class);
+                                startActivity(intent);
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("USER_MAIN_ACTIVITY", "createUserWithEmail:failure", task.getException());
