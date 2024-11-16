@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">FinalProject</string>
-    <string name="pokemart">PokeMart</string>
+    <string name="app_name">PokéMart</string>
+    <string name="pokemart">PokéMart</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
     <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="artwork_of_pokemart">Artwork of Pokemart</string>
+    <string name="pokemart_icon">Pokemart Icon</string>
+    <string name="enter_password_again">Enter Password again</string>
 </resources>

@@ -1,3 +1,13 @@
 https://www.dafont.com/pokemon.font
 
 https://developer.android.com/develop/ui/views/text-and-emoji/fonts-in-xml
+
+https://www.deviantart.com/toriangrey/art/Pokemart-807962214
+
+https://stackoverflow.com/questions/4668001/android-stretch-image-in-imageview-to-fit-screen
+
+https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9_Mart#/media/File:Pok%C3%A9_Mart_RSE.png
+
+https://stackoverflow.com/questions/58253302/how-to-set-border-around-text-of-a-textview
+
+https://fonts.google.com/icons?selected=Material+Icons+Two+Tone:lock:&icon.query=password&icon.set=Material+Icons&icon.style=Two+tone&icon.size=24&icon.color=%23e8eaed&icon.platform=web
