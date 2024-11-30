@@ -8,8 +8,12 @@ public class Item {
     private String description;
     private String imageUrl;
 
-    public Item() {
+    private Integer quantity;
 
+    public Item() {
+        name = "[PH] Item";
+        cost = 10000;
+        description = "[PH] Item Description";
     }
 
     public Item(String id, String name, Integer cost, String description, String imageUrl) {
@@ -61,6 +65,14 @@ public class Item {
         this.id = id;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -68,6 +80,7 @@ public class Item {
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", quantity='" + quantity + '\'' +
                 '}';
     }
 }

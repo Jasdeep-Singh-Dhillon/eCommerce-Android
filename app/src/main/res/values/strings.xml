@@ -13,4 +13,6 @@
     <string name="buy">Buy</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="item_image">Item Image</string>
+    <string name="quantity">Quantity:</string>
+    <string name="zero">0</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.jasdeep.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +44,11 @@ public class Home extends AppCompatActivity {
         });
 
         getItems();
+        Button viewCart = findViewById(R.id.cart);
+        viewCart.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Cart.class);
+            startActivity(intent);
+        });
         itemsView = findViewById(R.id.storeItems);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         itemsView.setLayoutManager(layoutManager);
@@ -56,21 +64,19 @@ public class Home extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Item item = snapshot.getValue(Item.class);
-                Log.d("DATABASE", item.toString());
-                Log.d("DATABASE", snapshot.getKey());
                 adapter.addItem(item);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Item item = snapshot.getValue(Item.class);
-//                Log.d("DATABASE", item.toString());
-                items.add(item);
+                adapter.updateItem(item);
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                Item item = snapshot.getValue(Item.class);
+                adapter.removeItem(item);
             }
 
             @Override
