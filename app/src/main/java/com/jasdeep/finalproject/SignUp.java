@@ -68,7 +68,7 @@ public class SignUp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("USER_MAIN_ACTIVITY", "createUserWithEmail:success");
+                            Log.d("SIGNUP_ACTIVITY", "createUserWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
                             Toast.makeText(
                                             getApplicationContext(),
@@ -81,7 +81,7 @@ public class SignUp extends AppCompatActivity {
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("USER_MAIN_ACTIVITY", "createUserWithEmail:failure", task.getException());
+                            Log.w("SIGNUP_ACTIVITY", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();}
                     }

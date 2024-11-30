@@ -1,27 +1,31 @@
 package com.jasdeep.finalproject;
 
 import android.os.Bundle;
-
+import android.util.Log;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jasdeep.finalproject.Item.Item;
 import com.jasdeep.finalproject.Item.ItemAdapter;
-
 import java.util.ArrayList;
 
-import kotlinx.coroutines.channels.ReceiveChannel;
 
 public class Home extends AppCompatActivity {
 
     private ArrayList<Item> items = new ArrayList<>();
     RecyclerView itemsView;
-    RecyclerView.Adapter adapter;
+    ItemAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
 
@@ -45,67 +49,40 @@ public class Home extends AppCompatActivity {
     }
 
     private void getItems() {
-        Item item;
-        item = new Item("UltraBall",
-                300,
-                "Ultra Ball Description",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
-        );
-        items.add(item);
-        item = new Item("Great Ball",
-                200,
-                "Description of Great Ball",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
-        );
-        items.add(item);
-        item = new Item("UltraBall",
-                300,
-                "Ultra Ball Description",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
-        );
-        items.add(item);
-        item = new Item("Great Ball",
-                200,
-                "Description of Great Ball",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
-        );
-        items.add(item);
-        item = new Item("UltraBall",
-                300,
-                "Ultra Ball Description",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
-        );
-        items.add(item);
-        item = new Item("Great Ball",
-                200,
-                "Description of Great Ball",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
-        );
-        items.add(item);
-        item = new Item("UltraBall",
-                300,
-                "Ultra Ball Description",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
-        );
-        items.add(item);
-        item = new Item("Great Ball",
-                200,
-                "Description of Great Ball",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
-        );
-        items.add(item);
-        item = new Item("UltraBall",
-                300,
-                "Ultra Ball Description",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
-        );
-        items.add(item);
-        item = new Item("Great Ball",
-                200,
-                "Description of Great Ball",
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
-        );
-        items.add(item);
+        FirebaseDatabase data = FirebaseDatabase.getInstance();
+        DatabaseReference ref = data.getReference().child("items");
 
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Item item = snapshot.getValue(Item.class);
+                Log.d("DATABASE", item.toString());
+                Log.d("DATABASE", snapshot.getKey());
+                adapter.addItem(item);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Item item = snapshot.getValue(Item.class);
+//                Log.d("DATABASE", item.toString());
+                items.add(item);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        ref.addChildEventListener(childEventListener);
     }
 }

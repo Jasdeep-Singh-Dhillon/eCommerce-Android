@@ -49,4 +49,10 @@ dependencies {
     implementation(libs.firebase.analytics)
     // Firebase Authentication
     implementation(libs.firebase.auth)
+    // Firebase Realtime Database
+    implementation(libs.firebase.database)
+
+    // Coil for image loading
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
 }

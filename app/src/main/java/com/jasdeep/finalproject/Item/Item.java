@@ -1,12 +1,19 @@
 package com.jasdeep.finalproject.Item;
 
 public class Item {
+
+    private String id;
     private String name;
     private Integer cost;
     private String description;
     private String imageUrl;
 
-    public Item(String name, Integer cost, String description, String imageUrl) {
+    public Item() {
+
+    }
+
+    public Item(String id, String name, Integer cost, String description, String imageUrl) {
+        this.id = id;
         this.name = name;
         this.cost = cost;
         this.description = description;
@@ -26,6 +33,7 @@ public class Item {
     }
 
     public void setDescription(String description) {
+        description = description.replace("\n", "");
         this.description = description;
     }
 
@@ -43,5 +51,23 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + name + '\'' +
+                ", cost=" + cost +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
