@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SignUp extends AppCompatActivity {
     private FirebaseAuth auth;
@@ -75,6 +80,7 @@ public class SignUp extends AppCompatActivity {
                                             "Sign Up successful",
                                             Toast.LENGTH_SHORT)
                                     .show();
+                            FirebaseDatabase.getInstance().getReference().child("cart").child(user.getUid()).setValue("");
                             if(user != null) {
                                 Intent intent = new Intent(getApplicationContext(), Login.class);
                                 startActivity(intent);
