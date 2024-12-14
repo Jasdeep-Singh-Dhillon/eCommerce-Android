@@ -26,12 +26,11 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
-    private ArrayList<Item> items = new ArrayList<>();
+    protected static ArrayList<Item> items = new ArrayList<>();
     RecyclerView itemsView;
     ItemAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-
-
+    public static final String POSITION = "ITEM_INDEX";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,4 +90,5 @@ public class Home extends AppCompatActivity {
         };
         ref.addChildEventListener(childEventListener);
     }
+
 }

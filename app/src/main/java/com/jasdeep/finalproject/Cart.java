@@ -4,7 +4,9 @@ import static java.lang.Integer.parseInt;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,17 +26,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jasdeep.finalproject.Item.CartAdapter;
 import com.jasdeep.finalproject.Item.Item;
-import com.jasdeep.finalproject.Item.ItemAdapter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Cart extends AppCompatActivity {
 
     private ArrayList<Item> items = new ArrayList<>();
     RecyclerView itemsView;
-    ItemAdapter adapter;
+    CartAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    TextView netTotal;
+    TextView tax;
+    TextView total;
+    Button checkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +58,30 @@ public class Cart extends AppCompatActivity {
         getCartItems();
 
         itemsView = findViewById(R.id.cartItems);
+        netTotal = findViewById(R.id.netTotalPriceTxt);
+        tax = findViewById(R.id.taxPriceTxt);
+        total = findViewById(R.id.totalPriceTxt);
+        checkout = findViewById(R.id.checkoutBtn);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         itemsView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(items);
+        adapter = new CartAdapter(items);
         itemsView.setAdapter(adapter);
+
+        checkout.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), Checkout.class);
+            startActivity(intent);
+        });
+    }
+
+    private void updateCheckout() {
+        int itemTotal = 0;
+        for (Item item : items) {
+            itemTotal += item.getCost() * item.getQuantity();
+            netTotal.setText(String.format(Locale.JAPAN, "¥ %d", itemTotal));
+            tax.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 0.1));
+            total.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 1.1));
+
+        }
     }
 
     private void getCartItems() {
@@ -62,7 +90,9 @@ public class Cart extends AppCompatActivity {
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
 
         DatabaseReference ref = data.child("cart").child(user.getUid());
-        ChildEventListener childEventListener = new ChildEventListener() {
+
+
+        ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
@@ -72,8 +102,10 @@ public class Cart extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Item item = snapshot.getValue(Item.class);
+                        assert item != null;
                         item.setQuantity(quantity);
                         adapter.addItem(item);
+                        updateCheckout();
                     }
 
                     @Override
@@ -85,13 +117,27 @@ public class Cart extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                DatabaseReference cartData = data.child("items").child(snapshot.getKey().toString());
+                Integer quantity = parseInt(snapshot.getValue().toString());
+                cartData.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Item item = snapshot.getValue(Item.class);
+                        assert item != null;
+                        item.setQuantity(quantity);
+                        adapter.updateItem(item);
+                        updateCheckout();
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Item item = snapshot.getValue(Item.class);
-                adapter.removeItem(item);
             }
 
             @Override
@@ -103,7 +149,7 @@ public class Cart extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
-        ref.addChildEventListener(childEventListener);
+        });
+
     }
 }

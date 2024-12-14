@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
         passwordTxt = findViewById(R.id.passwordTxt);
         loginBtn = findViewById(R.id.loginBtn);
 
-        if(auth.getCurrentUser() != null) {
+        if (auth.getCurrentUser() != null) {
             auth.signOut();
         }
 
@@ -50,7 +50,7 @@ public class Login extends AppCompatActivity {
             String emailInput = emailTxt.getEditableText().toString();
             String passwordInput = passwordTxt.getEditableText().toString();
 
-            if(isValidEmail(emailInput) && isValidPassword(passwordInput)) {
+            if (isValidEmail(emailInput) && isValidPassword(passwordInput)) {
                 loginUser(emailInput, passwordInput);
             }
 
@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
                             Log.d("LOGIN_ACTIVITY", "signInWithEmail:success");
                             FirebaseUser user = auth.getCurrentUser();
 
-                            if(user != null) {
+                            if (user != null) {
                                 Intent intent = new Intent(getApplicationContext(), Home.class);
                                 startActivity(intent);
                             }
@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-    private boolean isValidEmail (String email) {
+    private boolean isValidEmail(String email) {
         return true;
     }
 

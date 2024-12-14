@@ -56,13 +56,12 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = auth.getCurrentUser();
         if(user != null) {
-            Toast.makeText(
-                getApplicationContext(),
-                "User logged in",
-                Toast.LENGTH_SHORT
-            ).show();
+//            Toast.makeText(
+//                getApplicationContext(),
+//                "User logged in",
+//                Toast.LENGTH_SHORT
+//            ).show();
 
-//            TODO: Implement Login, SignUp and Signout
             Intent intent = new Intent(getApplicationContext(), Home.class);
             startActivity(intent);
         }

@@ -1,51 +1,39 @@
 package com.jasdeep.finalproject.Item;
 
-import static androidx.core.content.ContextCompat.startActivity;
 import static java.lang.Integer.parseInt;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.jasdeep.finalproject.Home;
-import com.jasdeep.finalproject.ItemPager;
 import com.jasdeep.finalproject.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import coil3.ImageLoader;
 import coil3.SingletonImageLoader;
 import coil3.request.ImageRequest;
 import coil3.target.ImageViewTarget;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemPagerAdapter extends RecyclerView.Adapter<ItemPagerAdapter.ItemViewHolder> {
 
     ArrayList<Item> storeItems;
 
-    public ItemAdapter(ArrayList<Item> items) {
+    public ItemPagerAdapter(ArrayList<Item> items) {
         this.storeItems = items;
     }
 
@@ -75,7 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @NonNull
     @Override
-    public ItemAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new ItemViewHolder(inflater, parent);
     }
@@ -88,17 +76,27 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 .target(new ImageViewTarget(holder.itemImage))
                 .build();
         loader.enqueue(request);
-        holder.cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(holder.cardView.getContext(), ItemPager.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt(Home.POSITION, position);
-            intent.putExtras(bundle);
-            holder.cardView.getContext().startActivity(intent);
-        });
         holder.itemName.setText(storeItems.get(position).getName());
         holder.itemDesc.setText(storeItems.get(position).getDescription());
-        holder.itemQuantity.setText(storeItems.get(position).getQuantity().toString());
         holder.itemPrice.setText("¥" + storeItems.get(position).getCost().toString());
+
+        holder.decreaseBtn.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(holder.quantityEdt.getEditableText().toString());
+            quantity--;
+            if (quantity < 1) {
+                return;
+            }
+            holder.quantityEdt.setText(String.valueOf(quantity));
+        });
+
+        holder.increaseBtn.setOnClickListener(view -> {
+            int quantity = Integer.parseInt(holder.quantityEdt.getEditableText().toString());
+            quantity++;
+            if (quantity >= 25) {
+                return;
+            }
+            holder.quantityEdt.setText(String.valueOf(quantity));
+        });
 
         holder.itemBuyBtn.setOnClickListener(view -> {
             Toast.makeText(holder.itemBuyBtn.getContext(), "Bought " + storeItems.get(position).getName(), Toast.LENGTH_SHORT).show();
@@ -107,25 +105,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.itemCartBtn.setOnClickListener(view -> {
             Item item = storeItems.get(position);
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            assert user != null;
             DatabaseReference ref = FirebaseDatabase
                     .getInstance()
                     .getReference()
                     .child("cart")
                     .child(user.getUid())
                     .child(item.getId());
-            assert user != null;
 
             ref.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if(task.isSuccessful()) {
+                    if (task.isSuccessful()) {
                         Object result = task.getResult().getValue();
-                        if(result == null) {
+                        if (result == null) {
                             ref.setValue(1);
                             return;
                         }
-                       int quantity = parseInt(result.toString());
-                       ref.setValue(quantity+1);
+                        int quantity = parseInt(holder.quantityEdt.getEditableText().toString());
+                        if (quantity <= 0) {
+                            return;
+                        }
+                        ref.setValue(quantity);
                     }
                 }
             });
@@ -139,28 +140,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private MaterialCardView cardView;
         private ImageView itemImage;
         private TextView itemName;
         private TextView itemDesc;
         private TextView itemPrice;
-
-        private TextView itemQuantity;
+        private Button decreaseBtn;
+        private EditText quantityEdt;
+        private Button increaseBtn;
         private Button itemBuyBtn;
         private Button itemCartBtn;
 
         public ItemViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item, parent, false));
-            cardView = itemView.findViewById(R.id.item_layout);
+            super(inflater.inflate(R.layout.item_viewpager, parent, false));
             itemImage = itemView.findViewById(R.id.itemIcon);
             itemName = itemView.findViewById(R.id.itemName);
-            itemDesc = itemView.findViewById(R.id.itemDescription);
             itemPrice = itemView.findViewById(R.id.itemPrice);
+            itemDesc = itemView.findViewById(R.id.itemDescription);
             itemBuyBtn = itemView.findViewById(R.id.buyBtn);
             itemCartBtn = itemView.findViewById(R.id.addCartBtn);
-            itemQuantity = itemView.findViewById(R.id.itemQuantity);
-
-
+            decreaseBtn = itemView.findViewById(R.id.decreaseQuantity);
+            increaseBtn = itemView.findViewById(R.id.increaseQuantity);
+            quantityEdt = itemView.findViewById(R.id.itemQuantity);
         }
     }
 }
+

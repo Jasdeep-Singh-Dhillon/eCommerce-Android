@@ -1,5 +1,6 @@
 [versions]
-agp = "8.7.2"
+agp = "8.7.3"
+awesomevalidation = "v4.3"
 coilCompose = "3.0.4"
 firebaseBom = "33.5.1"
 junit = "4.13.2"
@@ -11,6 +12,8 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 
 [libraries]
+awesome-validation = { module = "com.basgeekball:awesome-validation" }
+awesomevalidation = { module = "com.github.thyrlian:AwesomeValidation", version.ref = "awesomevalidation" }
 coil = { module = "io.coil-kt.coil3:coil", version.ref = "coilCompose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
