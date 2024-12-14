@@ -60,4 +60,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="thank_you">Thank You</string>
+    <string name="back">Back</string>
+    <string name="credit_card">Credit CARD</string>
+    <string name="no_items_in_the_cart">No Items in the Cart</string>
 </resources>

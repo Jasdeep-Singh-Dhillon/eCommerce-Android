@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
+            finish();
         });
 
         signUpBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SignUp.class);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -56,20 +58,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = auth.getCurrentUser();
         if(user != null) {
-//            Toast.makeText(
-//                getApplicationContext(),
-//                "User logged in",
-//                Toast.LENGTH_SHORT
-//            ).show();
-
             Intent intent = new Intent(getApplicationContext(), Home.class);
             startActivity(intent);
+            finish();
         }
     }
 
-
-
-
-    //TODO: Validate Email and Password
 
 }

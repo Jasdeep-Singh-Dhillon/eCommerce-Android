@@ -1,12 +1,14 @@
 package com.jasdeep.finalproject;
 
+import static android.view.View.GONE;
 import static java.lang.Integer.parseInt;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +46,9 @@ public class Cart extends AppCompatActivity {
     TextView tax;
     TextView total;
     Button checkout;
+    Button back;
+
+    TextView empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +64,30 @@ public class Cart extends AppCompatActivity {
         getCartItems();
 
         itemsView = findViewById(R.id.cartItems);
+        empty = findViewById(R.id.empty);
         netTotal = findViewById(R.id.netTotalPriceTxt);
         tax = findViewById(R.id.taxPriceTxt);
         total = findViewById(R.id.totalPriceTxt);
         checkout = findViewById(R.id.checkoutBtn);
+        back = findViewById(R.id.homeBtn);
+
         layoutManager = new LinearLayoutManager(getApplicationContext());
         itemsView.setLayoutManager(layoutManager);
         adapter = new CartAdapter(items);
         itemsView.setAdapter(adapter);
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager = new GridLayoutManager(getApplicationContext(), 3);
+            itemsView.setLayoutManager(layoutManager);
+        }
+
         checkout.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Checkout.class);
             startActivity(intent);
+            finish();
+        });
+
+        back.setOnClickListener(view -> {
             finish();
         });
     }
@@ -78,20 +96,25 @@ public class Cart extends AppCompatActivity {
         int itemTotal = 0;
         for (Item item : items) {
             itemTotal += item.getCost() * item.getQuantity();
-            netTotal.setText(String.format(Locale.JAPAN, "¥ %d", itemTotal));
-            tax.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 0.1));
-            total.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 1.1));
 
+        }
+        netTotal.setText(String.format(Locale.JAPAN, "¥ %d", itemTotal));
+        tax.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 0.1));
+        total.setText(String.format(Locale.JAPAN, "¥ %.0f", itemTotal * 1.1));
+
+        if(items.size() <= 0) {
+            itemsView.setVisibility(GONE);
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            itemsView.setVisibility(View.VISIBLE);
+            empty.setVisibility(GONE);
         }
     }
 
     private void getCartItems() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         DatabaseReference data = FirebaseDatabase.getInstance().getReference();
-
         DatabaseReference ref = data.child("cart").child(user.getUid());
-
 
         ref.addChildEventListener(new ChildEventListener() {
             @Override
@@ -139,6 +162,7 @@ public class Cart extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                updateCheckout();
             }
 
             @Override

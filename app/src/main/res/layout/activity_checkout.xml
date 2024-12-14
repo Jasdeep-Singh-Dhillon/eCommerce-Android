@@ -352,7 +352,7 @@
                 android:autofillHints="creditCardSecurityCode"
                 android:background="@android:color/transparent"
                 android:hint="@string/cvv_hint"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 app:layout_constraintBaseline_toTopOf="parent"
                 android:nextFocusDown="@id/submitBtn"/>
         </com.google.android.material.card.MaterialCardView>

@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jasdeep.finalproject.Checkout;
 import com.jasdeep.finalproject.Home;
 import com.jasdeep.finalproject.ItemPager;
 import com.jasdeep.finalproject.R;
@@ -101,7 +102,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.itemPrice.setText("¥" + storeItems.get(position).getCost().toString());
 
         holder.itemBuyBtn.setOnClickListener(view -> {
-            Toast.makeText(holder.itemBuyBtn.getContext(), "Bought " + storeItems.get(position).getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(holder.itemBuyBtn.getContext(), Checkout.class);
+            holder.itemBuyBtn.getContext().startActivity(intent);
         });
 
         holder.itemCartBtn.setOnClickListener(view -> {

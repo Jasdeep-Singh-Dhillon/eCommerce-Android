@@ -17,10 +17,6 @@
             android:name=".ThankYou"
             android:exported="false" />
         <activity
-            android:name=".ui.login.ThankYou"
-            android:exported="false"
-            android:label="@string/title_activity_thank_you" />
-        <activity
             android:name=".Checkout"
             android:exported="false" />
         <activity

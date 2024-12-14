@@ -13,6 +13,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -97,10 +101,12 @@ public class Checkout extends AppCompatActivity {
             cardCvv = getInput(cardCVVEdt);
 
             if(!validation.validate()) return;
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("cart").child(user.getUid()).getRef();
+            ref.removeValue();
 
             startActivity(new Intent(getApplicationContext(), ThankYou.class));
             finish();
-
         });
 
     }
