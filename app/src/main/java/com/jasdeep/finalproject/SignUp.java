@@ -3,6 +3,7 @@ package com.jasdeep.finalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +34,7 @@ public class SignUp extends AppCompatActivity {
     private EditText emailTxt;
     private EditText passwordTxt;
     private EditText passwordRepeatTxt;
-
+    private AwesomeValidation validation;
     private Button signUpBtn;
 
     @Override
@@ -54,13 +57,19 @@ public class SignUp extends AppCompatActivity {
         passwordTxt = findViewById(R.id.passwordTxt);
         passwordRepeatTxt = findViewById(R.id.passwordRepeatTxt);
         signUpBtn = findViewById(R.id.signupBtn);
-
+        validation = new AwesomeValidation(ValidationStyle.BASIC);
+        validation.addValidation(this, R.id.emailTxt, Patterns.EMAIL_ADDRESS, R.string.emailerror);
+        validation.addValidation(this, R.id.passwordTxt, ".{6,}", R.string.passworderror);
+//        validation.addValidation(this, R.id.passwordRepeatTxt, ".{6,}", R.string.passworderror);
+        validation.addValidation(this, R.id.passwordRepeatTxt, R.id.passwordRepeatTxt, R.string.passwordrepeat);
         signUpBtn.setOnClickListener(view -> {
             String emailInput = emailTxt.getEditableText().toString();
             String passwordInput = passwordTxt.getEditableText().toString();
             String passwordRepeatInput = passwordRepeatTxt.getEditableText().toString();
 
-            if(passwordInput.equals(passwordRepeatInput) && isValidEmail(emailInput) && isValidPassword(passwordInput)) {
+            if(!validation.validate()) return;
+
+            if(passwordInput.equals(passwordRepeatInput)) {
                 createUser(emailInput, passwordInput);
             }
         });
@@ -94,11 +103,4 @@ public class SignUp extends AppCompatActivity {
                 });
     }
 
-    private boolean isValidEmail (String email) {
-        return true;
-    }
-
-    private boolean isValidPassword(String password) {
-        return true;
-    }
 }

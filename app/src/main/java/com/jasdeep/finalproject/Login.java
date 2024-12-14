@@ -3,6 +3,7 @@ package com.jasdeep.finalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +28,7 @@ public class Login extends AppCompatActivity {
     private EditText emailTxt;
     private EditText passwordTxt;
     private Button loginBtn;
+    private AwesomeValidation validation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +40,14 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        validation = new AwesomeValidation(ValidationStyle.BASIC);
         auth = FirebaseAuth.getInstance();
         emailTxt = findViewById(R.id.emailTxt);
         passwordTxt = findViewById(R.id.passwordTxt);
         loginBtn = findViewById(R.id.loginBtn);
+
+        validation.addValidation(this, R.id.emailTxt, Patterns.EMAIL_ADDRESS, R.string.emailerror);
+        validation.addValidation(this, R.id.passwordTxt, ".{6,}", R.string.passworderror);
 
         if (auth.getCurrentUser() != null) {
             auth.signOut();
@@ -49,11 +56,9 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(view -> {
             String emailInput = emailTxt.getEditableText().toString();
             String passwordInput = passwordTxt.getEditableText().toString();
+            if (!validation.validate()) return;
 
-            if (isValidEmail(emailInput) && isValidPassword(passwordInput)) {
-                loginUser(emailInput, passwordInput);
-            }
-
+            loginUser(emailInput, passwordInput);
         });
     }
 
@@ -82,12 +87,5 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-    private boolean isValidEmail(String email) {
-        return true;
-    }
-
-    private boolean isValidPassword(String password) {
-        return true;
-    }
 }
 

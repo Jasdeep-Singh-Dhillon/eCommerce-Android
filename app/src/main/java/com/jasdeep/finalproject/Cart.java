@@ -70,6 +70,7 @@ public class Cart extends AppCompatActivity {
         checkout.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Checkout.class);
             startActivity(intent);
+            finish();
         });
     }
 

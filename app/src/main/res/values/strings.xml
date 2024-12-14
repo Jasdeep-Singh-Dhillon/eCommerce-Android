@@ -41,4 +41,23 @@
     <string name="postal_code">Postcode</string>
     <string name="credit_card_info">Credit Card Information</string>
     <string name="delete">Delete</string>
+    <string name="emailerror">Enter a valid email address</string>
+    <string name="passworderror">Enter a password with at least 6 characters</string>
+    <string name="passwordrepeat">Passwords do not match</string>
+    <string name="required">Field is required</string>
+    <string name="provinceerror">Enter a valid province in AA format</string>
+    <string name="postcodeerror">Enter a valid postal code</string>
+    <string name="cardnoerror">Enter a valid credit card number</string>
+    <string name="cardexpiryerror">Enter a valid expiration date</string>
+    <string name="cvverror">Enter a valid CVV</string>
+    <string name="title_activity_thank_you">ThankYou</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="thank_you">Thank You</string>
 </resources>
