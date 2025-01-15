@@ -87,6 +87,8 @@ public class Cart extends AppCompatActivity {
             finish();
         });
 
+        checkout.setVisibility(GONE);
+
         back.setOnClickListener(view -> {
             finish();
         });
@@ -105,8 +107,10 @@ public class Cart extends AppCompatActivity {
         if(items.size() <= 0) {
             itemsView.setVisibility(GONE);
             empty.setVisibility(View.VISIBLE);
+            checkout.setVisibility(View.GONE);
         } else {
             itemsView.setVisibility(View.VISIBLE);
+            checkout.setVisibility(View.VISIBLE);
             empty.setVisibility(GONE);
         }
     }

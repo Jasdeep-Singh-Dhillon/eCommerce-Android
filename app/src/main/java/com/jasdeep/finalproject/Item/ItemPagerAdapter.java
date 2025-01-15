@@ -2,6 +2,8 @@ package com.jasdeep.finalproject.Item;
 
 import static java.lang.Integer.parseInt;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -80,11 +82,67 @@ public class ItemPagerAdapter extends RecyclerView.Adapter<ItemPagerAdapter.Item
         holder.itemDesc.setText(storeItems.get(position).getDescription());
         holder.itemPrice.setText("¥" + storeItems.get(position).getCost().toString());
 
+        Item item = storeItems.get(holder.getAdapterPosition());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("cart")
+                .child(user.getUid())
+                .child(item.getId())
+                .getRef().get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        Object obj = task.getResult().getValue();
+                        if (obj != null) {
+                            holder.quantityEdt.setText(obj.toString());
+                        }
+                    }
+                });
+
+        holder.quantityEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Item item = storeItems.get(holder.getAdapterPosition());
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                assert user != null;
+                DatabaseReference ref = FirebaseDatabase
+                        .getInstance()
+                        .getReference()
+                        .child("cart")
+                        .child(user.getUid())
+                        .child(item.getId());
+
+                String quantity = holder.quantityEdt.getEditableText().toString();
+                if(quantity.isEmpty()) {
+                    return;
+                }
+                if(parseInt(quantity) > 30) {
+                    ref.setValue(Integer.parseInt("30"));
+                    return;
+                }
+                ref.setValue(Integer.parseInt(quantity));
+            }
+        });
+
         holder.decreaseBtn.setOnClickListener(view -> {
             int quantity = Integer.parseInt(holder.quantityEdt.getEditableText().toString());
             quantity--;
             if (quantity < 1) {
                 return;
+            }
+            if (quantity > 30) {
+                quantity = 30;
             }
             holder.quantityEdt.setText(String.valueOf(quantity));
         });
@@ -92,7 +150,8 @@ public class ItemPagerAdapter extends RecyclerView.Adapter<ItemPagerAdapter.Item
         holder.increaseBtn.setOnClickListener(view -> {
             int quantity = Integer.parseInt(holder.quantityEdt.getEditableText().toString());
             quantity++;
-            if (quantity >= 25) {
+            if (quantity > 30) {
+                holder.quantityEdt.setText(String.valueOf(30));
                 return;
             }
             holder.quantityEdt.setText(String.valueOf(quantity));
@@ -103,8 +162,6 @@ public class ItemPagerAdapter extends RecyclerView.Adapter<ItemPagerAdapter.Item
         });
 
         holder.itemCartBtn.setOnClickListener(view -> {
-            Item item = storeItems.get(position);
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             DatabaseReference ref = FirebaseDatabase
                     .getInstance()
@@ -126,7 +183,11 @@ public class ItemPagerAdapter extends RecyclerView.Adapter<ItemPagerAdapter.Item
                         if (quantity <= 0) {
                             return;
                         }
+                        if (quantity > 30) {
+                            quantity = 30;
+                        }
                         ref.setValue(quantity);
+                        holder.quantityEdt.setText(String.valueOf(quantity));
                     }
                 }
             });

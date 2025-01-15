@@ -14,14 +14,14 @@
         android:gravity="center"
         android:text="@string/personal_info"
         android:textAllCaps="true"
+        android:textColor="?attr/colorSecondary"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07"
-        android:textColor="?attr/colorSecondary"/>
+        app:layout_constraintVertical_bias="0.07" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15">
-
 
 
         <com.google.android.material.card.MaterialCardView
@@ -53,8 +52,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/first_name"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/last_name"/>
+                android:nextFocusDown="@id/last_name"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -74,8 +73,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/last_name"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/address_line_1"/>
+                android:nextFocusDown="@id/address_line_1"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
@@ -101,8 +100,8 @@
             android:background="@android:color/transparent"
             android:hint="@string/address_1"
             android:inputType="text"
-            app:layout_constraintBaseline_toTopOf="parent"
-            android:nextFocusDown="@id/address_line_2"/>
+            android:nextFocusDown="@id/address_line_2"
+            app:layout_constraintBaseline_toTopOf="parent" />
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
@@ -133,8 +132,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/address_2"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/apartment"/>
+                android:nextFocusDown="@id/apartment"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -154,8 +153,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/apartment"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/city"/>
+                android:nextFocusDown="@id/city"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
@@ -188,8 +187,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/city"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/province"/>
+                android:nextFocusDown="@id/province"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -210,8 +209,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/province"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/postcode"/>
+                android:nextFocusDown="@id/postcode"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -231,26 +230,27 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/postal_code"
                 android:inputType="textPostalAddress"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/card_holder_name"/>
+                android:nextFocusDown="@id/card_holder_name"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="@string/credit_card_info"
+        android:text="@string/payment_information"
         android:textAllCaps="true"
+        android:textColor="?attr/colorSecondary"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55"
-        android:textColor="?attr/colorSecondary"/>
+        app:layout_constraintVertical_bias="0.55" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -273,8 +273,8 @@
             android:background="@android:color/transparent"
             android:hint="@string/name_hint"
             android:inputType="text"
-            app:layout_constraintBaseline_toTopOf="parent"
-            android:nextFocusDown="@id/credit_card_no"/>
+            android:nextFocusDown="@id/credit_card_no"
+            app:layout_constraintBaseline_toTopOf="parent" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -299,8 +299,8 @@
             android:background="@android:color/transparent"
             android:hint="@string/card_number_hint"
             android:inputType="number"
-            app:layout_constraintBaseline_toTopOf="parent"
-            android:nextFocusDown="@id/card_expiration"/>
+            android:nextFocusDown="@id/card_expiration"
+            app:layout_constraintBaseline_toTopOf="parent" />
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
@@ -332,8 +332,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/expiration_hint"
                 android:inputType="text"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/card_cvv"/>
+                android:nextFocusDown="@id/card_cvv"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -353,23 +353,38 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/cvv_hint"
                 android:inputType="numberPassword"
-                app:layout_constraintBaseline_toTopOf="parent"
-                android:nextFocusDown="@id/submitBtn"/>
+                android:nextFocusDown="@id/submitBtn"
+                app:layout_constraintBaseline_toTopOf="parent" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/submitBtn"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="@string/submit"
-        style="@style/Widget.MaterialComponents.Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.95">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submitBtn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:text="@string/submit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:text="@string/back" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

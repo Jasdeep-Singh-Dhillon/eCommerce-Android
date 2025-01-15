@@ -2,8 +2,10 @@ package com.jasdeep.finalproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +35,7 @@ public class Checkout extends AppCompatActivity {
             cardNumberEdt,
             cardExpirationEdt,
             cardCVVEdt;
-    Button submitBtn;
+    Button submitBtn, backBtn;
     AwesomeValidation validation;
 
     @Override
@@ -60,18 +62,19 @@ public class Checkout extends AppCompatActivity {
         cardExpirationEdt = findViewById(R.id.card_expiration);
         cardCVVEdt = findViewById(R.id.card_cvv);
         submitBtn = findViewById(R.id.submitBtn);
+        backBtn = findViewById(R.id.backBtn);
 
         validation = new AwesomeValidation(ValidationStyle.BASIC);
 
-        validation.addValidation(this, R.id.first_name, ".{1,}", R.string.required);
-        validation.addValidation(this, R.id.last_name, ".{1,}", R.string.required);
+        validation.addValidation(this, R.id.first_name, "[A-Za-z]{1,}", R.string.required);
+        validation.addValidation(this, R.id.last_name, "[A-Za-z]x{1,}", R.string.required);
         validation.addValidation(this, R.id.address_line_1, ".{1,}", R.string.required);
         validation.addValidation(this, R.id.city, ".{1,}", R.string.required);
         validation.addValidation(this, R.id.province, "[A-Za-z]{2}", R.string.provinceerror);
         validation.addValidation(this, R.id.postcode, "[A-Za-z][0-9][A-Za-z].?[0-9][A-Za-z][0-9]", R.string.postcodeerror);
         validation.addValidation(this, R.id.card_holder_name, ".{1,}", R.string.required);
         validation.addValidation(this, R.id.credit_card_no, "[0-9]{4}.?[0-9]{4}.?[0-9]{4}.?[0-9]{4}", R.string.cardnoerror);
-        validation.addValidation(this, R.id.card_expiration, "[0-3]?[0-9]/2[4-9]", R.string.cardexpiryerror);
+        validation.addValidation(this, R.id.card_expiration, "^(0[1-9]|1[0-2]|[1-9])\\/2[4-9]", R.string.cardexpiryerror);
         validation.addValidation(this, R.id.card_cvv, "[0-9]{3}", R.string.cvverror);
 
         submitBtn.setOnClickListener(view -> {
@@ -106,6 +109,10 @@ public class Checkout extends AppCompatActivity {
             ref.removeValue();
 
             startActivity(new Intent(getApplicationContext(), ThankYou.class));
+            finish();
+        });
+
+        backBtn.setOnClickListener(view -> {
             finish();
         });
 

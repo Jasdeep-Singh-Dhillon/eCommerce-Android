@@ -92,7 +92,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemViewHolder
             int quantity = Integer.parseInt(holder.itemQuantity.getEditableText().toString());
             quantity--;
             if (quantity < 1) {
-                return;
+                quantity = 1;
+            }
+            if (quantity > 30) {
+                quantity = 30;
             }
             holder.itemQuantity.setText(String.valueOf(quantity));
         });
@@ -121,7 +124,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemViewHolder
                         .child(item.getId());
 
                 String quantity = holder.itemQuantity.getEditableText().toString();
-
+                if(quantity.isEmpty()) {
+                    quantity = "1";
+                }
+                if(Integer.parseInt(quantity) > 30) {
+                    quantity = "30";
+                }
                 ref.setValue(Integer.parseInt(quantity));
             }
         });
@@ -129,8 +137,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemViewHolder
         holder.increaseQuantity.setOnClickListener(view -> {
             int quantity = Integer.parseInt(holder.itemQuantity.getEditableText().toString());
             quantity++;
-            if (quantity >= 25) {
-                return;
+            if (quantity > 30) {
+                quantity = 30;
             }
             holder.itemQuantity.setText(String.valueOf(quantity));
         });
@@ -147,7 +155,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ItemViewHolder
                     .child(item.getId());
 
             String quantity = holder.itemQuantity.getEditableText().toString();
-
+            if(Integer.parseInt(quantity) > 30) {
+                quantity = "30";
+                holder.itemQuantity.setText(quantity);
+            }
             ref.setValue(Integer.parseInt(quantity));
         });
 

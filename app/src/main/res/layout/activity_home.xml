@@ -39,8 +39,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="18dp"
-                app:tint="?attr/colorOnBackground"
-                android:src="@drawable/home" />
+                android:src="@drawable/home"
+                app:tint="?attr/colorPrimary" />
 
             <ImageView
                 android:id="@+id/cart"
@@ -48,8 +48,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="18dp"
-                app:tint="?attr/colorOnBackground"
-                android:src="@drawable/cart" />
+                android:src="@drawable/cart"
+                app:tint="?attr/colorOnBackground" />
 
             <ImageView
                 android:id="@+id/logout"

@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
 
         signUpBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SignUp.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
     }
 
